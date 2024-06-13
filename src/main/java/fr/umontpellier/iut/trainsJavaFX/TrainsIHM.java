@@ -6,6 +6,7 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Plateau;
 import fr.umontpellier.iut.trainsJavaFX.vues.DonneesGraphiques;
 import fr.umontpellier.iut.trainsJavaFX.vues.VueChoixJoueurs;
 import fr.umontpellier.iut.trainsJavaFX.vues.VueDuJeu;
+import fr.umontpellier.iut.trainsJavaFX.vues.VueResultats;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
@@ -21,7 +22,6 @@ public class TrainsIHM extends Application {
     private VueChoixJoueurs vueChoixJoueurs;
     private Stage primaryStage;
     private Jeu jeu;
-
     private final boolean avecVueChoixJoueurs = false;
 
     @Override
@@ -57,7 +57,9 @@ public class TrainsIHM extends Application {
         GestionJeu.setJeu(jeu);
         VueDuJeu vueDuJeu = new VueDuJeu(jeu);
 
-        Scene scene = new Scene(vueDuJeu, Screen.getPrimary().getBounds().getWidth() * DonneesGraphiques.pourcentageEcran, Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran); // la scene doit être créée avant de mettre en place les bindings
+        Scene scene = new Scene(vueDuJeu, Screen.getPrimary().getBounds().getWidth() * DonneesGraphiques.pourcentageEcran,
+                                         Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran); // la scene doit être créée avant de mettre en place les bindings
+
         vueDuJeu.creerBindings();
         jeu.run(); // le jeu doit être démarré après que les bindings ont été mis en place
 
