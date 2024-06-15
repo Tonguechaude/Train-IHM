@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -134,6 +135,13 @@ public class VueChoixJoueurs extends Stage {
     }
 
     public void createBindings() {
+
+
+
+
+        Ancre.minHeightProperty().bind(getScene().heightProperty());
+        Ancre.minWidthProperty().bind(getScene().widthProperty());
+
         ChangeListener<Number> nbJoueursChangeListener = (observable, oldValue, newValue) -> {
             for(int i = 1 ; i < 9 ; i++) {
                 choixJoueurs.getChildren().get(i).setVisible(false);
@@ -162,6 +170,8 @@ public class VueChoixJoueurs extends Stage {
             obList.add(i);
         }
         nbJoueurs.setItems(obList);
+
+        setResizable(false);
 
         createBindings();
 
