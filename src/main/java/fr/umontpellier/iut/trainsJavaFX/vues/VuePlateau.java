@@ -118,6 +118,7 @@ public class VuePlateau extends Pane {
         Group tuilePlateau = new Group();
         tuilePlateau.setId(String.valueOf(numTuile));
         SVGPath hexagone = new SVGPath();
+        //hexagone.setOpacity(0);
         hexagone.setContent(
                 "M" + x + "," + y + " " +
                         "L" + (x + plateau.getDepX()) + "," + (y - plateau.getDepY()) + " " +

@@ -1,8 +1,13 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
+import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 
 /**
@@ -17,18 +22,54 @@ import javafx.scene.layout.Pane;
 public class VueDuJeu extends Pane {
 
     private final IJeu jeu;
+    private HBox plateauIHM;
     private VuePlateau plateau;
+
+    private HBox joueurCourantIHM;
+    private VueJoueurCourant joueurCourant;
+
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
-        plateau = new VuePlateau();
-        getChildren().add(plateau);
+
+        //TOP PLATEAU
+        initialisePlateau();
+
+
+        // BOTTOM joueurCourant
+        initialiseJoueurCourant();
+
+
+        getChildren().addAll(plateauIHM, joueurCourantIHM);
+
     }
 
+    private void initialisePlateau() {
+        plateauIHM = new HBox();
+        plateauIHM.setAlignment(Pos.CENTER);
+        plateau = new VuePlateau();
+        plateauIHM.getChildren().add(plateau);
+    }
+
+    private void initialiseJoueurCourant() {
+        joueurCourantIHM = new HBox();
+        joueurCourantIHM.setAlignment(Pos.BOTTOM_RIGHT);
+        joueurCourant = new VueJoueurCourant();
+        joueurCourantIHM.getChildren().add(joueurCourant);
+    }
+
+
     public void creerBindings() {
-        plateau.prefWidthProperty().bind(getScene().widthProperty());
-        plateau.prefHeightProperty().bind(getScene().heightProperty());
+
+        plateauIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
+        plateauIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.6));
+
+        joueurCourantIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.5));
+        joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.5));
+
         plateau.creerBindings();
+        joueurCourant.creerBindings();
+
     }
 
     public IJeu getJeu() {
