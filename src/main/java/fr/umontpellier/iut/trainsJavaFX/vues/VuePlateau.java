@@ -169,16 +169,20 @@ public class VuePlateau extends Pane {
     }
 
     private void ajouteRail(Tuile t, Joueur j, Circle pionJoueur) {
-        t.ajouterRail(j);
-        Image rails = new Image("images/icons/rail_" + j.getCouleur().name() +  ".png");
-        ImageView railImageView = new ImageView(rails);
-        railImageView.setFitHeight(50);
-        railImageView.setFitWidth(50);
-        double x = pionJoueur.getCenterX() - railImageView.getFitWidth() / 2;
-        double y = pionJoueur.getCenterY() - railImageView.getFitHeight() / 2;
-        railImageView.setLayoutX(x);
-        railImageView.setLayoutY(y);
-        tuiles.getChildren().add(railImageView);
+        t.getRails().addListener((SetChangeListener<IJoueur>) change -> {
+            if (t.hasRail(j)) {
+                ajouteRailATuile(t, j, pionJoueur);
+                Image rails = new Image("images/icons/rail_" + j.getCouleur().name() +  ".png");
+                ImageView railImageView = new ImageView(rails);
+                railImageView.setFitHeight(50);
+                railImageView.setFitWidth(50);
+                double x = pionJoueur.getCenterX() - railImageView.getFitWidth() / 2;
+                double y = pionJoueur.getCenterY() - railImageView.getFitHeight() / 2;
+                railImageView.setLayoutX(x);
+                railImageView.setLayoutY(y);
+                tuiles.getChildren().add(railImageView);
+            }
+        });
     }
 
 
