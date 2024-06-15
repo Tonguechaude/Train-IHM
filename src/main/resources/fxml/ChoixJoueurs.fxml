@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="623.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueChoixJoueurs">
+   <children>
+      <VBox alignment="CENTER" layoutX="-1.0" prefHeight="624.0" prefWidth="510.0" spacing="10.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="48.0" prefWidth="345.0" text="BIENVENUE SUR TRAINS ! " textAlignment="CENTER">
+               <font>
+                  <Font name="KacstTitleL" size="25.0" />
+               </font>
+            </Label>
+            <GridPane alignment="CENTER" prefHeight="314.0" prefWidth="510.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="97.00000228881837" minHeight="10.0" prefHeight="96.19998397827149" valignment="CENTER" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="53.79999771118163" minHeight="0.0" prefHeight="0.0" valignment="CENTER" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="99.6" minHeight="10.0" prefHeight="51.80003051757812" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="102.60002746582029" minHeight="10.0" prefHeight="58.39997558593751" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="98.39999999999998" minHeight="10.0" prefHeight="52.80002441406248" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="84.20004882812498" minHeight="10.0" prefHeight="57.39997558593751" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label text="Nombre de Joueurs :" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                  <Label text="Pseudo Joueur n°1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <Label text="Pseudo Joueur n°2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <Label text="Pseudo Joueur n°3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <Label text="Pseudo Joueur n°4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <ComboBox prefHeight="24.0" prefWidth="66.0" promptText="4" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <Separator prefWidth="200.0" GridPane.rowIndex="1" />
+                  <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+               </children>
+            </GridPane>
+            <Separator prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="50.0">
+               <children>
+                  <Label text="Choix du Plateau :" />
+                  <Separator orientation="VERTICAL" prefHeight="200.0" />
+                  <RadioButton mnemonicParsing="false" text="Osaka" />
+                  <RadioButton mnemonicParsing="false" text="Tokyo" />
+               </children>
+            </HBox>
+            <Separator prefWidth="200.0" />
+            <Button contentDisplay="CENTER" mnemonicParsing="false" text="PLAY" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
