@@ -22,6 +22,8 @@ import javafx.scene.layout.Pane;
 public class VueDuJeu extends Pane {
 
     private final IJeu jeu;
+
+    private final BorderPane vueDuJeu;
     private HBox plateauIHM;
     private VuePlateau plateau;
 
@@ -32,30 +34,29 @@ public class VueDuJeu extends Pane {
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
 
+        vueDuJeu = new BorderPane();
+
         //TOP PLATEAU
         initialisePlateau();
 
 
         // BOTTOM joueurCourant
         initialiseJoueurCourant();
-
-
-        getChildren().addAll(plateauIHM, joueurCourantIHM);
-
+        getChildren().add(vueDuJeu);
     }
 
     private void initialisePlateau() {
         plateauIHM = new HBox();
-        plateauIHM.setAlignment(Pos.CENTER);
         plateau = new VuePlateau();
         plateauIHM.getChildren().add(plateau);
+        vueDuJeu.setLeft(plateauIHM);
     }
 
     private void initialiseJoueurCourant() {
         joueurCourantIHM = new HBox();
-        joueurCourantIHM.setAlignment(Pos.BOTTOM_RIGHT);
         joueurCourant = new VueJoueurCourant();
         joueurCourantIHM.getChildren().add(joueurCourant);
+        vueDuJeu.setBottom(joueurCourantIHM);
     }
 
 
