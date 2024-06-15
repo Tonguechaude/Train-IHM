@@ -24,41 +24,49 @@ public class VueDuJeu extends Pane {
     private final IJeu jeu;
     private HBox plateauIHM;
     private VuePlateau plateau;
+
+    private HBox joueurCourantIHM;
     private VueJoueurCourant joueurCourant;
+
 
     public VueDuJeu(IJeu jeu) {
         this.jeu = jeu;
 
-        //BorderPane root = new BorderPane();
-
         //TOP PLATEAU
+        initialisePlateau();
+
+
+        // BOTTOM joueurCourant
+        initialiseJoueurCourant();
+
+
+        getChildren().addAll(plateauIHM, joueurCourantIHM);
+
+    }
+
+    private void initialisePlateau() {
         plateauIHM = new HBox();
         plateauIHM.setAlignment(Pos.CENTER);
         plateau = new VuePlateau();
         plateauIHM.getChildren().add(plateau);
-        //root.getChildren().add(plateauIHM);
-        //root.setTop(plateauIHM);
-
-
-        // BOTTOM joueurCourant
-        HBox joueurCourantIHM = new HBox();
-        joueurCourant = new VueJoueurCourant();
-        joueurCourantIHM.getChildren().add(joueurCourant);
-        //root.getChildren().add(joueurCourantIHM);
-        //root.setBottom(joueurCourantIHM);
-
-
-
-        //getChildren().add(root);
-        getChildren().addAll(plateauIHM, joueurCourantIHM);
     }
 
+    private void initialiseJoueurCourant() {
+        joueurCourantIHM = new HBox();
+        joueurCourantIHM.setAlignment(Pos.BOTTOM_RIGHT);
+        joueurCourant = new VueJoueurCourant();
+        joueurCourantIHM.getChildren().add(joueurCourant);
+    }
+
+
     public void creerBindings() {
+
         plateauIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
         plateauIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.6));
 
-        //plateau.prefWidthProperty().bind(getScene().widthProperty());
-        //plateau.prefHeightProperty().bind(getScene().heightProperty());
+        joueurCourantIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.5));
+        joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.5));
+
         plateau.creerBindings();
         joueurCourant.creerBindings();
 

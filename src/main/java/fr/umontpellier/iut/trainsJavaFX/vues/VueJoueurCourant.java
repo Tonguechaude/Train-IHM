@@ -6,6 +6,7 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
@@ -20,6 +21,8 @@ import java.util.List;
  */
 public class VueJoueurCourant extends Pane {
 
+    @FXML
+    private Pane joueurCourant;
     @FXML
     private Label nomJoueurCourant;
     @FXML
@@ -40,33 +43,30 @@ public class VueJoueurCourant extends Pane {
     public VueJoueurCourant() {
 
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/plateau.fxml"));
-            loader.setRoot(this);
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/JoueurCourant.fxml"));
             loader.setController(this);
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        getChildren().add(joueurCourant);
     }
 
     public void creerBindings() {
+        System.out.println("Création des bindings pour le joueur courant...");
         // Bindings
         GestionJeu.getJeu().joueurCourantProperty().addListener(
                 (source, oldJoueur, newJoueur) -> {
 
-                    if (source != null) {
+                    if (newJoueur != null) {
+                        System.out.println("Changement de joueur courant : " + newJoueur.getNom());
 
                         nomJoueurCourant.setText(newJoueur.getNom());
-
                         nbArgent.setText(String.valueOf(newJoueur.getArgent()));
-
                         pointVictoire.setText(String.valueOf(newJoueur.getScoreTotal()));
-
                         nbRails.setText(String.valueOf(newJoueur.getNbJetonsRails()));
-
                         nbCartePioche.setText(String.valueOf(newJoueur.getPioche().size()));
 
-                        //Actualisation joueur courant
                         newJoueur.argentProperty().addListener(
                                 (src, oldValue, newValue) -> {
                                     nbArgent.setText(String.valueOf(newValue));
@@ -91,8 +91,6 @@ public class VueJoueurCourant extends Pane {
                                 }
                         );
 
-                        //Cartes
-
                         newJoueur.mainProperty().addListener(
                                 (src, oldValue, newValue) -> {
                                     updateCartes(newJoueur.getJeu().getJoueurCourant());
@@ -113,7 +111,6 @@ public class VueJoueurCourant extends Pane {
 
                         updateCartes(newJoueur.getJeu().getJoueurCourant());
                     }
-
                 }
         );
     }
