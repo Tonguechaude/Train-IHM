@@ -39,6 +39,7 @@ public class VuePlateau extends Pane {
     @FXML
     private Group tuiles;
 
+
     private DonneesPlateau plateau;
 
     private Scale scaleTuile;
