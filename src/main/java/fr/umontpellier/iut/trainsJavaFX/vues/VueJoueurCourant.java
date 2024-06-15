@@ -32,6 +32,9 @@ public class VueJoueurCourant extends Pane {
     private Label instructions;
 
     @FXML
+    private Button passer;
+
+    @FXML
     private Label nomJoueurCourant;
     @FXML
     private Label nbArgent;
@@ -50,10 +53,6 @@ public class VueJoueurCourant extends Pane {
 
 
 
-
-
-
-
     public VueJoueurCourant() {
 
         try {
@@ -63,9 +62,6 @@ public class VueJoueurCourant extends Pane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
 
         getChildren().add(joueurCourantBox);
     }
@@ -113,81 +109,46 @@ public class VueJoueurCourant extends Pane {
                                 }
                         );
 
-
-
-
-                       /* newJoueur.mainProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    updateCartes(newJoueur.getJeu().getJoueurCourant());
-                                }
-                        );
-
-                        newJoueur.cartesRecuesProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    updateCartes(newJoueur.getJeu().getJoueurCourant());
-                                }
-                        );
-
-                        newJoueur.cartesEnJeuProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    updateCartes(newJoueur.getJeu().getJoueurCourant());
-                                }
-                        );
-
-                        updateCartes(newJoueur.getJeu().getJoueurCourant());*/
-
                         cartesMain.getChildren().clear();
 
-                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty())
-                        {
-                            Button b = new Button(c.getNom());
-                            cartesMain.getChildren().add(b);
+                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty()) {
+                            VueCarte vc = new VueCarte(c);
+                            cartesMain.getChildren().add(vc);
                             EventHandler<? super MouseEvent> actionCarteMain = (mouseEvent -> newJoueur.uneCarteDeLaMainAEteChoisie(c.getNom()));
-                            b.setOnMouseClicked(actionCarteMain);
+                            vc.setOnMouseClicked(actionCarteMain);
                         }
 
                         cartesEnJeu.getChildren().clear();
 
-                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesEnJeuProperty())
-                        {
-                            Button b = new Button(c.getNom());
-                            cartesMain.getChildren().add(b);
+                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesEnJeuProperty()) {
+                            VueCarte vc = new VueCarte(c);
+                            cartesEnJeu.getChildren().add(vc);
                             EventHandler<? super MouseEvent> actionCarteRecu = (mouseEvent -> newJoueur.uneCarteEnJeuAEteChoisie(c.getNom()));
-                            b.setOnMouseClicked(actionCarteRecu);
+                            vc.setOnMouseClicked(actionCarteRecu);
                         }
 
                         cartesRecu.getChildren().clear();
 
+                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesRecuesProperty()) {
+                            VueCarte vc = new VueCarte(c);
+                            cartesRecu.getChildren().add(vc);
+                        }
                     }
                 }
         );
-    }
 
-    /*private void updateCartes(Joueur joueur) {
-        if (joueur != null) {
-            updateCartesHBox(cartesMain, joueur.getMain());
-            updateCartesHBox(cartesEnJeu, joueur.getCartesEnJeu());
-            updateCartesHBox(cartesRecu, joueur.getCartesRecues());
-        } else {
-            cartesMain.getChildren().clear();
-            cartesEnJeu.getChildren().clear();
-            cartesRecu.getChildren().clear();
-        }
-    }
+      /*  GestionJeu.getJeu().joueurCourantProperty().get().mainProperty().addListener(
+                (source, oldJoueur, newJoueur) -> {
 
-    private void updateCartesHBox(HBox div, List<Carte> cartes) {
-        div.getChildren().clear();
-        for (Carte carte : cartes)
-        {
-            Button b = new Button(carte.getNom());
-            div.getChildren().add(b);
-            b.setOnMouseClicked(actionCarte);
 
-        }
-    }*/
+                }
 
-    private void initialiseCarte (HBox cartesMain, HBox cartesEnJeu, HBox cartesRecu)
-    {
+        );*/
+
+        passer.setOnMouseClicked(actionPasserParDefaut);
 
     }
+    EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> GestionJeu.getJeu().passerAEteChoisi());
+
+
 }

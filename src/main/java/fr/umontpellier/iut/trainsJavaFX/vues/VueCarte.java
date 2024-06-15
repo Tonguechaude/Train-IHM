@@ -1,7 +1,10 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
+import fr.umontpellier.iut.trainsJavaFX.ICarte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.event.EventHandler;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.StackPane;
 
@@ -12,14 +15,31 @@ import javafx.scene.layout.StackPane;
  */
 public class VueCarte extends StackPane {
 
-    private final Carte carte;
+    private final ICarte carte;
+    private final ImageView imageView;
 
     public VueCarte(Carte carte) {
         this.carte = carte;
+
+        imageView = new ImageView(getImage());
+        imageView.setPreserveRatio(true);
+        imageView.setFitHeight(105);
+
+        getChildren().add(imageView);
+    }
+
+    private Image getImage() {
+        return new Image("images/cartes/" + refractorNom(carte.getNom()) + ".jpg");
     }
 
     public void setCarteChoisieListener(EventHandler<MouseEvent> quandCarteEstChoisie) {
         setOnMouseClicked(quandCarteEstChoisie);
+    }
+    public String refractorNom(String nom) {
+        return nom.replaceAll(" ", "_")
+                .replaceAll("[ôÔ]", "o")
+                .replaceAll("[éÉ]", "e")
+                .toLowerCase();
     }
 
 }

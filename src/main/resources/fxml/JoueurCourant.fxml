@@ -68,7 +68,7 @@
             <HBox alignment="CENTER_LEFT" prefHeight="38.0" prefWidth="387.0" spacing="10.0">
                <children>
                   <Label fx:id="instructions" alignment="BOTTOM_CENTER" contentDisplay="CENTER" text="instructions" />
-                  <Button mnemonicParsing="false" text="Passer" />
+                  <Button fx:id="passer" mnemonicParsing="false" text="Passer" />
                </children>
             </HBox>
             <HBox alignment="CENTER" prefHeight="41.0" prefWidth="540.0">
