@@ -20,6 +20,13 @@ public enum Plateau {
         };
     }
 
+    public Plateau getNomPlateau(String nomVille) {
+        if(nomVille.equals("Osaka")) {
+            return OSAKA;
+        }
+        return TOKYO;
+    }
+
     private static List<Tuile> makeTuilesOsaka() {
         Tuile[][] array = new Tuile[][] {
                 new Tuile[] {

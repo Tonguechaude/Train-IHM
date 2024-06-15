@@ -15,7 +15,8 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane prefHeight="623.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.umontpellier.iut.trainsJavaFX.vues.VueChoixJoueurs">
+<?import javafx.scene.control.ToggleGroup?>
+<AnchorPane fx:id="Ancre" prefHeight="623.0" prefWidth="509.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox alignment="CENTER" layoutX="-1.0" prefHeight="624.0" prefWidth="510.0" spacing="10.0">
          <children>
@@ -24,7 +25,7 @@
                   <Font name="KacstTitleL" size="25.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER" prefHeight="314.0" prefWidth="510.0">
+            <GridPane fx:id="choixJoueurs" alignment="CENTER" prefHeight="314.0" prefWidth="510.0">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -43,11 +44,11 @@
                   <Label text="Pseudo Joueur n°2" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <Label text="Pseudo Joueur n°3" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                   <Label text="Pseudo Joueur n°4" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
                   <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                   <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="5" />
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
-                  <ComboBox prefHeight="24.0" prefWidth="66.0" promptText="4" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
+                  <ComboBox fx:id="nbJoueurs" prefHeight="24.0" prefWidth="66.0" promptText="4" GridPane.columnIndex="1" GridPane.halignment="CENTER" />
                   <Separator prefWidth="200.0" GridPane.rowIndex="1" />
                   <Separator prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
@@ -57,12 +58,12 @@
                <children>
                   <Label text="Choix du Plateau :" />
                   <Separator orientation="VERTICAL" prefHeight="200.0" />
-                  <RadioButton mnemonicParsing="false" text="Osaka" />
-                  <RadioButton mnemonicParsing="false" text="Tokyo" />
+                  <RadioButton fx:id="choixPlateauOsaka" mnemonicParsing="false" text="Osaka"/>
+                  <RadioButton fx:id="choixPlateauTokyo" mnemonicParsing="false" text="Tokyo"/>
                </children>
             </HBox>
             <Separator prefWidth="200.0" />
-            <Button contentDisplay="CENTER" mnemonicParsing="false" text="PLAY" />
+            <Button contentDisplay="CENTER" mnemonicParsing="false" onAction="#jouerClique" text="PLAY" />
          </children>
       </VBox>
    </children>
