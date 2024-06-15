@@ -1,9 +1,11 @@
 package fr.umontpellier.iut.trainsJavaFX.vues;
 
 import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
+import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.beans.binding.Bindings;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -52,7 +54,6 @@ public class VueJoueurCourant extends Pane {
     private HBox cartesRecu;
 
 
-
     public VueJoueurCourant() {
 
         try {
@@ -69,64 +70,79 @@ public class VueJoueurCourant extends Pane {
     public void creerBindings() {
         System.out.println("Création des bindings pour le joueur courant...");
         // Bindings
+
+        instructions.textProperty().bind(GestionJeu.getJeu().instructionProperty());
+        passer.setOnMouseClicked(actionPasserParDefaut);
+
         GestionJeu.getJeu().joueurCourantProperty().addListener(
                 (source, oldJoueur, newJoueur) -> {
 
                     if (newJoueur != null) {
                         System.out.println("Changement de joueur courant : " + newJoueur.getNom());
 
-
-                        instructions.textProperty().bind(GestionJeu.getJeu().instructionProperty());
-
-
                         nomJoueurCourant.setText(newJoueur.getNom());
                         nbArgent.setText(String.valueOf(newJoueur.getArgent()));
+                        nbRails.setText(String.valueOf(newJoueur.pointsRailsProperty().get()));
                         pointVictoire.setText(String.valueOf(newJoueur.getScoreTotal()));
-                        nbRails.setText(String.valueOf(newJoueur.getNbJetonsRails()));
                         nbCartePioche.setText(String.valueOf(newJoueur.getPioche().size()));
+                    }
+                }
+        );
 
-                        newJoueur.argentProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    nbArgent.setText(String.valueOf(newValue));
-                                }
-                        );
+        for (IJoueur j : GestionJeu.getJeu().getJoueurs())
+        {
+            j.argentProperty().addListener(
+                    (src, oldValue, newValue) -> {
+                        nbArgent.setText(String.valueOf(newValue));
+                    }
+            );
 
-                        newJoueur.scoreProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    pointVictoire.setText(String.valueOf(newValue));
-                                }
-                        );
+            j.pointsRailsProperty().addListener(
+                    (src, oldValue, newValue) -> {
+                        nbRails.setText(String.valueOf(newValue));
+                    }
+            );
 
-                        newJoueur.nbJetonsRailsProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    nbRails.setText(String.valueOf(newValue));
-                                }
-                        );
+            j.scoreProperty().addListener(
+                    (src, oldValue, newValue) -> {
+                        pointVictoire.setText(String.valueOf(newValue));
+                    }
+            );
 
-                        newJoueur.piocheProperty().addListener(
-                                (src, oldValue, newValue) -> {
-                                    nbCartePioche.setText(String.valueOf(newValue));
-                                }
-                        );
+            j.piocheProperty().addListener(
+                    (src, oldValue, newValue) -> {
+                        nbCartePioche.setText(String.valueOf(newValue));
+                    }
+            );
 
+            j.mainProperty().addListener(
+                    (src, oldMain, newMain) -> {
                         cartesMain.getChildren().clear();
 
-                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty()) {
+                        for (Carte c : newMain) {
                             VueCarte vc = new VueCarte(c);
                             cartesMain.getChildren().add(vc);
-                            EventHandler<? super MouseEvent> actionCarteMain = (mouseEvent -> newJoueur.uneCarteDeLaMainAEteChoisie(c.getNom()));
-                            vc.setOnMouseClicked(actionCarteMain);
+                            EventHandler<MouseEvent> actionCarteMain = (mouseEvent -> GestionJeu.getJeu().joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
+                            vc.setCarteChoisieListener(actionCarteMain);
                         }
+                    }
+            );
 
+            j.cartesEnJeuProperty().addListener(
+                    (src, oldCarteEnJeu, newCarteEnJeu) -> {
                         cartesEnJeu.getChildren().clear();
 
-                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesEnJeuProperty()) {
+                        for (Carte c : newCarteEnJeu) {
                             VueCarte vc = new VueCarte(c);
                             cartesEnJeu.getChildren().add(vc);
-                            EventHandler<? super MouseEvent> actionCarteRecu = (mouseEvent -> newJoueur.uneCarteEnJeuAEteChoisie(c.getNom()));
-                            vc.setOnMouseClicked(actionCarteRecu);
+                            EventHandler<MouseEvent> actionCarteRecu = (mouseEvent -> GestionJeu.getJeu().joueurCourantProperty().get().uneCarteEnJeuAEteChoisie(c.getNom()));
+                            vc.setCarteChoisieListener(actionCarteRecu);
                         }
+                    }
+            );
 
+            j.cartesRecuesProperty().addListener(
+                    (src, oldCarteRecu, newCarteRecu) -> {
                         cartesRecu.getChildren().clear();
 
                         for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesRecuesProperty()) {
@@ -134,21 +150,20 @@ public class VueJoueurCourant extends Pane {
                             cartesRecu.getChildren().add(vc);
                         }
                     }
-                }
-        );
-
-      /*  GestionJeu.getJeu().joueurCourantProperty().get().mainProperty().addListener(
-                (source, oldJoueur, newJoueur) -> {
-
-
-                }
-
-        );*/
-
-        passer.setOnMouseClicked(actionPasserParDefaut);
-
+            );
+        }
     }
-    EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> GestionJeu.getJeu().passerAEteChoisi());
 
+    EventHandler<MouseEvent> actionPasserParDefaut = (mouseEvent -> GestionJeu.getJeu().passerAEteChoisi());
 
+    public void initialize() {
+        cartesMain.getChildren().clear();
+
+        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty()) {
+            VueCarte vc = new VueCarte(c);
+            cartesMain.getChildren().add(vc);
+            EventHandler<MouseEvent> actionCarteMain = (mouseEvent -> GestionJeu.getJeu().joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
+            vc.setCarteChoisieListener(actionCarteMain);
+        }
+    }
 }

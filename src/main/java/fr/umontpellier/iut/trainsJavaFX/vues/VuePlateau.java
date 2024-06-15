@@ -7,6 +7,9 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Plateau;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.Tuile;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.plateau.TuileVille;
 import javafx.beans.binding.DoubleBinding;
+import javafx.beans.value.ChangeListener;
+import javafx.collections.ListChangeListener;
+import javafx.collections.SetChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
@@ -23,7 +26,9 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.transform.Scale;
 
 import java.io.IOException;
+import java.lang.annotation.ElementType;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Cette classe présente les tuiles sur le plateau.
@@ -164,10 +169,18 @@ public class VuePlateau extends Pane {
     }
 
     private void ajouteRail(Tuile t, Joueur j, Circle pionJoueur) {
-        // A compléter pour que la tuile change quand le nombre de rails du joueur change,
-        // vous pouvez dans un premier temps faire en sorte qu'un changement du nombre de rails
-        // provoque un appel à la fonction ajouteRailATuile
+        t.ajouterRail(j);
+        Image rails = new Image("images/icons/rail_" + j.getCouleur().name() +  ".png");
+        ImageView railImageView = new ImageView(rails);
+        railImageView.setFitHeight(50);
+        railImageView.setFitWidth(50);
+        double x = pionJoueur.getCenterX() - railImageView.getFitWidth() / 2;
+        double y = pionJoueur.getCenterY() - railImageView.getFitHeight() / 2;
+        railImageView.setLayoutX(x);
+        railImageView.setLayoutY(y);
+        tuiles.getChildren().add(railImageView);
     }
+
 
     private Circle creerPionJoueur(int numPion, double centerX, double centerY) {
         double posPion = DonneesGraphiques.posPion;
