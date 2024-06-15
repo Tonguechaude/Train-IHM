@@ -136,12 +136,6 @@ public class VueChoixJoueurs extends Stage {
 
     public void createBindings() {
 
-
-
-
-        Ancre.minHeightProperty().bind(getScene().heightProperty());
-        Ancre.minWidthProperty().bind(getScene().widthProperty());
-
         ChangeListener<Number> nbJoueursChangeListener = (observable, oldValue, newValue) -> {
             for(int i = 1 ; i < 9 ; i++) {
                 choixJoueurs.getChildren().get(i).setVisible(false);
