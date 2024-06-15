@@ -68,6 +68,9 @@ public class VueDuJeu extends Pane {
         joueurCourantIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.5));
         joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.5));
 
+        vueDuJeu.prefHeightProperty().bind(getScene().heightProperty());
+        vueDuJeu.prefWidthProperty().bind(getScene().widthProperty());
+
         plateau.creerBindings();
         joueurCourant.creerBindings();
 

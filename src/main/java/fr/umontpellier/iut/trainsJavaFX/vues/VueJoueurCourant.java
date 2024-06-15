@@ -4,10 +4,13 @@ import fr.umontpellier.iut.trainsJavaFX.GestionJeu;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.beans.binding.Bindings;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
 
@@ -22,7 +25,12 @@ import java.util.List;
 public class VueJoueurCourant extends Pane {
 
     @FXML
-    private Pane joueurCourant;
+    private Pane joueurCourantBox;
+
+
+    @FXML
+    private Label instructions;
+
     @FXML
     private Label nomJoueurCourant;
     @FXML
@@ -40,6 +48,12 @@ public class VueJoueurCourant extends Pane {
     @FXML
     private HBox cartesRecu;
 
+
+
+
+
+
+
     public VueJoueurCourant() {
 
         try {
@@ -49,7 +63,11 @@ public class VueJoueurCourant extends Pane {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        getChildren().add(joueurCourant);
+
+
+
+
+        getChildren().add(joueurCourantBox);
     }
 
     public void creerBindings() {
@@ -60,6 +78,10 @@ public class VueJoueurCourant extends Pane {
 
                     if (newJoueur != null) {
                         System.out.println("Changement de joueur courant : " + newJoueur.getNom());
+
+
+                        instructions.textProperty().bind(GestionJeu.getJeu().instructionProperty());
+
 
                         nomJoueurCourant.setText(newJoueur.getNom());
                         nbArgent.setText(String.valueOf(newJoueur.getArgent()));
@@ -91,7 +113,10 @@ public class VueJoueurCourant extends Pane {
                                 }
                         );
 
-                        newJoueur.mainProperty().addListener(
+
+
+
+                       /* newJoueur.mainProperty().addListener(
                                 (src, oldValue, newValue) -> {
                                     updateCartes(newJoueur.getJeu().getJoueurCourant());
                                 }
@@ -109,13 +134,36 @@ public class VueJoueurCourant extends Pane {
                                 }
                         );
 
-                        updateCartes(newJoueur.getJeu().getJoueurCourant());
+                        updateCartes(newJoueur.getJeu().getJoueurCourant());*/
+
+                        cartesMain.getChildren().clear();
+
+                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty())
+                        {
+                            Button b = new Button(c.getNom());
+                            cartesMain.getChildren().add(b);
+                            EventHandler<? super MouseEvent> actionCarteMain = (mouseEvent -> newJoueur.uneCarteDeLaMainAEteChoisie(c.getNom()));
+                            b.setOnMouseClicked(actionCarteMain);
+                        }
+
+                        cartesEnJeu.getChildren().clear();
+
+                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesEnJeuProperty())
+                        {
+                            Button b = new Button(c.getNom());
+                            cartesMain.getChildren().add(b);
+                            EventHandler<? super MouseEvent> actionCarteRecu = (mouseEvent -> newJoueur.uneCarteEnJeuAEteChoisie(c.getNom()));
+                            b.setOnMouseClicked(actionCarteRecu);
+                        }
+
+                        cartesRecu.getChildren().clear();
+
                     }
                 }
         );
     }
 
-    private void updateCartes(Joueur joueur) {
+    /*private void updateCartes(Joueur joueur) {
         if (joueur != null) {
             updateCartesHBox(cartesMain, joueur.getMain());
             updateCartesHBox(cartesEnJeu, joueur.getCartesEnJeu());
@@ -129,9 +177,17 @@ public class VueJoueurCourant extends Pane {
 
     private void updateCartesHBox(HBox div, List<Carte> cartes) {
         div.getChildren().clear();
-        for (Carte carte : cartes) {
-            Label carteLabel = new Label(carte.toString());
-            div.getChildren().add(carteLabel);
+        for (Carte carte : cartes)
+        {
+            Button b = new Button(carte.getNom());
+            div.getChildren().add(b);
+            b.setOnMouseClicked(actionCarte);
+
         }
+    }*/
+
+    private void initialiseCarte (HBox cartesMain, HBox cartesEnJeu, HBox cartesRecu)
+    {
+
     }
 }
