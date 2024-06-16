@@ -43,45 +43,8 @@ public class VueCarte extends StackPane {
         imageView.setFitHeight(125);
 
         //EFFETS AFFICHAGE
-
-        ImageView largeImageView = new ImageView(getImage());
-        largeImageView.setPreserveRatio(true);
-        largeImageView.setFitHeight(350);
-
-        Popup popup = new Popup();
-        popup.setAutoHide(true);
-        popup.getContent().add(largeImageView);
-
-        /*//{ POPUP
-        imageView.setOnMouseEntered(event -> {
-            popup.show(imageView, event.getScreenX(), event.getScreenY());
-        });
-
-        imageView.setOnMouseExited(event -> {
-            popup.hide();
-        });
-        //FIN POPUP}*/
-
-        //{Transition
-        FadeTransition fadeIn = new FadeTransition(Duration.millis(200), largeImageView);
-        fadeIn.setFromValue(0.0);
-        fadeIn.setToValue(1.0);
-
-        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), largeImageView);
-        fadeOut.setFromValue(1.0);
-        fadeOut.setToValue(0.0);
-
-        imageView.setOnMouseEntered(event -> {
-            largeImageView.setOpacity(0);
-            popup.show(imageView, event.getScreenX(), event.getScreenY());
-            fadeIn.playFromStart();
-        });
-
-        imageView.setOnMouseExited(event -> {
-            fadeOut.playFromStart();
-            fadeOut.setOnFinished(e -> popup.hide());
-        });
-        //FIN Transition}
+        addTransition();
+        //addPopup();
 
         getChildren().addAll(imageView);
 
@@ -124,6 +87,57 @@ public class VueCarte extends StackPane {
 
     public StringProperty getLabel() {
         return basDroite.textProperty();
+    }
+
+    public void addTransition() {
+        ImageView largeImageView = new ImageView(getImage());
+        largeImageView.setPreserveRatio(true);
+        largeImageView.setFitHeight(350);
+
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.getContent().add(largeImageView);
+
+        //{Transition
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(200), largeImageView);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), largeImageView);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        imageView.setOnMouseEntered(event -> {
+            largeImageView.setOpacity(0);
+            popup.show(imageView, event.getScreenX(), event.getScreenY());
+            fadeIn.playFromStart();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            fadeOut.playFromStart();
+            fadeOut.setOnFinished(e -> popup.hide());
+        });
+        //FIN Transition}
+    }
+
+    public void addPopup() {
+        ImageView largeImageView = new ImageView(getImage());
+        largeImageView.setPreserveRatio(true);
+        largeImageView.setFitHeight(350);
+
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.getContent().add(largeImageView);
+
+        //{ POPUP
+        imageView.setOnMouseEntered(event -> {
+            popup.show(imageView, event.getScreenX(), event.getScreenY());
+        });
+
+        imageView.setOnMouseExited(event -> {
+            popup.hide();
+        });
+        //FIN POPUP}
     }
 
 }
