@@ -9,12 +9,14 @@ import fr.umontpellier.iut.trainsJavaFX.vues.VueDuJeu;
 import fr.umontpellier.iut.trainsJavaFX.vues.VueResultats;
 import javafx.application.Application;
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
 import javafx.collections.ListChangeListener;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +27,8 @@ public class TrainsIHM extends Application {
     private VueChoixJoueurs vueChoixJoueurs;
     private Stage primaryStage;
     private Jeu jeu;
-    private final boolean avecVueChoixJoueurs = false;
+    private final boolean avecVueChoixJoueurs = true;
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -43,6 +46,16 @@ public class TrainsIHM extends Application {
         }
     }
 
+    private final ChangeListener<Boolean> quandLaPartieEstFinie = (source, oldValue, newValue) -> {
+        if(jeu.finDePartieProperty().get()){
+            VueResultats vueResultats = new VueResultats(this);
+            Scene scene = new Scene(vueResultats);
+            primaryStage.setScene(scene);
+            primaryStage.show();
+        }
+    };
+
+
     public void demarrerPartie() {
        String[] nomsJoueurs;
        Plateau plateau = Plateau.OSAKA;
@@ -52,7 +65,7 @@ public class TrainsIHM extends Application {
        }
        else
        {
-            nomsJoueurs = new String[]{"John", "Paul", "George",  "Ringo"};
+            nomsJoueurs = new String[]{"John", "Paul"/*, "George",  "Ringo"*/};
        }
         // Tirer aléatoirement 8 cartes préparation
         List<String> cartesPreparation = new ArrayList<>(FabriqueListeDeCartes.getNomsCartesPreparation());
@@ -66,7 +79,9 @@ public class TrainsIHM extends Application {
                                          Screen.getPrimary().getBounds().getHeight() * DonneesGraphiques.pourcentageEcran); // la scene doit être créée avant de mettre en place les bindings
 
         vueDuJeu.creerBindings();
-        jeu.run(); // le jeu doit être démarré après que les bindings ont été mis en place
+        jeu.run();// le jeu doit être démarré après que les bindings ont été mis en place
+
+        jeu.finDePartieProperty().addListener(quandLaPartieEstFinie);
 
         //VueResultats vueResultats = new VueResultats(this);
         primaryStage.setMinWidth(Screen.getPrimary().getBounds().getWidth() / 2.5);

@@ -132,6 +132,12 @@ public class VueDuJeu extends Pane {
         joueurCourant.creerBindings();
         autresJoueurs.creerBindings();
 
+        getJeu().finDePartieProperty().addListener(
+                (event) -> {
+
+                }
+        );
+
     }
 
     public IJeu getJeu() {
