@@ -5,14 +5,14 @@ import fr.umontpellier.iut.trainsJavaFX.IJoueur;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.Joueur;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 import java.io.IOException;
 import java.util.List;
@@ -105,26 +105,40 @@ public class VueAutresJoueurs extends FlowPane {
         Label nbRails = new Label(String.valueOf(joueur.pointsRailsProperty().get()));
         Label pioche = new Label(String.valueOf(joueur.piocheProperty().sizeProperty().get()));
 
-        ImageView joueurCouleur = new ImageView(new Image("images/icons/cube_red.png", (double) 35, (double) 35, true, true ));
+        Image joueurCouleur = new Image("images/icons/cube_"+nomIcone(joueur.getCouleur().name()) +".png", (double) 35, (double) 35, true, true );
+        ImageView joueurcolor = new ImageView(joueurCouleur);
         ImageView imageArgent = new ImageView(new Image("images/Perso/JoueurCourant/icone_argent.png", (double) 35, (double) 35, true, true));
         ImageView imageVictoire = new ImageView(new Image("images/Perso/JoueurCourant/star.png", (double) 35, (double) 35, true, true));
         ImageView imageRails = new ImageView(new Image("images/Perso/JoueurCourant/rail.png", (double) 35, (double) 35, true, true));
         ImageView imagePioche = new ImageView(new Image("images/Perso/JoueurCourant/deck.png", (double) 35, (double) 35, true, true));
 
-        nomJoueurBox = new HBox(nomJoueur, joueurCouleur);
+        nomJoueurBox = new HBox(nomJoueur, joueurcolor);
         nomJoueurBox.setAlignment(Pos.CENTER);
+        nomJoueurBox.setSpacing(10);
+
         argentBox = new HBox(nbArgent, imageArgent);
         argentBox.setAlignment(Pos.CENTER);
+        argentBox.setSpacing(10);
+
+
         victoireBox = new HBox(pointVictoire, imageVictoire);
         victoireBox.setAlignment(Pos.CENTER);
+        victoireBox.setSpacing(10);
+
+
         railsBox = new HBox(nbRails, imageRails);
         railsBox.setAlignment(Pos.CENTER);
+        railsBox.setSpacing(10);
+
+
         piocheBox = new HBox(pioche, imagePioche);
         piocheBox.setAlignment(Pos.CENTER);
+        piocheBox.setSpacing(10);
 
 
         hBox.getChildren().addAll(nomJoueurBox, argentBox, victoireBox, railsBox, piocheBox);
-        hBox.setSpacing(10);
+        hBox.setStyle("-fx-background-color:" + nomIcone(joueur.getCouleur().name()) + ";");
+        hBox.setSpacing(20);
 
         return hBox;
     }
