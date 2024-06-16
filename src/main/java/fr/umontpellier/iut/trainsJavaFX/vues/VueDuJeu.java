@@ -6,15 +6,14 @@ import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Separator;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.Priority;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Paint;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -75,6 +74,7 @@ public class VueDuJeu extends Pane {
         initialiseJoueurCourant();
         initialiseAutresJoueurs();
         bottom = new HBox(joueurCourantIHM, autresJoueursIHM);
+        bottom.setAlignment(Pos.CENTER);
         vueDuJeu.setBottom(bottom);
     }
 
@@ -97,6 +97,7 @@ public class VueDuJeu extends Pane {
     private void initialiseReserve()
     {
         reserve = new FlowPane();
+
         for(String nomCarte : jeu.getTaillesPilesReserveProperties().keySet()) {
             VueCarte vc = new VueCarte(jeu.getReserve().getCarte(nomCarte), jeu.getTaillesPilesReserveProperties().get(nomCarte));
             reserve.getChildren().add(vc);
@@ -108,6 +109,11 @@ public class VueDuJeu extends Pane {
                     }
             );
         }
+        reserve.setAlignment(Pos.CENTER);
+        reserve.setHgap(6);
+        reserve.setVgap(6);
+        //reserve.setBorder(Border.stroke(Paint.valueOf( "#d68910" )));
+        reserve.setStyle("-fx-background-color:  #283747;");
         vueDuJeu.setRight(reserve);
     }
 
