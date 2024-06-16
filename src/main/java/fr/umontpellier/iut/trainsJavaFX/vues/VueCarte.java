@@ -56,7 +56,7 @@ public class VueCarte extends StackPane {
         //setMargin(cercle, new Insets(0,10,10,0));
 
         setAlignment(basDroite, Pos.BOTTOM_RIGHT);
-        setMargin(basDroite, new Insets(0,2,2,0));
+        setMargin(basDroite, new Insets(0,3,3,0));
         basDroite.setTextFill(Paint.valueOf("black"));
         basDroite.setText(String.valueOf(nbRestants.get()));
     }
