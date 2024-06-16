@@ -27,7 +27,7 @@ public class TrainsIHM extends Application {
     private VueChoixJoueurs vueChoixJoueurs;
     private Stage primaryStage;
     private Jeu jeu;
-    private final boolean avecVueChoixJoueurs = true;
+    private final boolean avecVueChoixJoueurs = false;
 
 
     @Override
@@ -105,13 +105,13 @@ public class TrainsIHM extends Application {
     };
 
     public void arreterJeu() {
-        /*Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Confirmation");
         alert.setContentText("On arrête de jouer ?");
         Optional<ButtonType> result = alert.showAndWait();
-        if (result.isPresent() && result.get() == ButtonType.OK) {*/
+        if (result.isPresent() && result.get() == ButtonType.OK) {
             Platform.exit();
-        //}
+        }
     }
 
     public Jeu getJeu() {
