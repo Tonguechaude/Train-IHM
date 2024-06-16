@@ -9,9 +9,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.HBox;
@@ -36,6 +37,8 @@ public class VueJoueurCourant extends Pane {
     @FXML
     private Button passer;
 
+    @FXML
+    private ImageView icone;
     @FXML
     private Label nomJoueurCourant;
     @FXML
@@ -81,10 +84,21 @@ public class VueJoueurCourant extends Pane {
                         System.out.println("Changement de joueur courant : " + newJoueur.getNom());
 
                         nomJoueurCourant.setText(newJoueur.getNom());
+                        icone.setImage(new Image("images/icons/cube_" + nomIcone(newJoueur.getCouleur().name()) + ".png"));
                         nbArgent.setText(String.valueOf(newJoueur.getArgent()));
                         nbRails.setText(String.valueOf(newJoueur.pointsRailsProperty().get()));
                         pointVictoire.setText(String.valueOf(newJoueur.getScoreTotal()));
                         nbCartePioche.setText(String.valueOf(newJoueur.getPioche().size()));
+                        joueurCourantBox.setStyle(
+                                "-fx-background-color:" + nomIconeBackground(GestionJeu.getJeu().joueurCourantProperty().get().getCouleur().name()) + ";" +
+                                "-fx-border-width: 2px; " +
+                                "-fx-border-radius: 50px; " +
+                                "-fx-border-color:" + nomIconeBorder(GestionJeu.getJeu().joueurCourantProperty().get().getCouleur().name()) +";" +
+                                "-fx-background-radius: 50px;"
+                        );
+
+
+
                     }
                 }
         );
@@ -156,6 +170,43 @@ public class VueJoueurCourant extends Pane {
 
     EventHandler<MouseEvent> actionPasserParDefaut = (mouseEvent -> GestionJeu.getJeu().passerAEteChoisi());
 
+    public String nomIcone(String couleur)
+    {
+        return switch (couleur)
+        {
+            case "ROUGE" ->  "red";
+            case "VERT" ->  "green";
+            case "JAUNE" ->  "yellow";
+            case "BLEU" ->  "blue";
+            default -> "pas de couleur";
+        };
+    }
+
+    public String nomIconeBackground(String couleur)
+    {
+        return switch (couleur)
+        {
+            case "ROUGE" ->  "#d98e7e";
+            case "VERT" ->  "#c0d97e";
+            case "JAUNE" ->  "#d9d67e";
+            case "BLEU" ->  "#7eacd9";
+            default -> "pas de couleur";
+        };
+    }
+
+    public String nomIconeBorder(String couleur)
+    {
+        return switch (couleur)
+        {
+            case "ROUGE" -> "red";
+            case "VERT" ->  "green";
+            case "JAUNE" ->  "yellow";
+            case "BLEU" ->  "blue";
+            default -> "pas de couleur";
+        };
+    }
+
+
     public void initialize() {
         cartesMain.getChildren().clear();
 
@@ -164,6 +215,7 @@ public class VueJoueurCourant extends Pane {
             cartesMain.getChildren().add(vc);
             EventHandler<MouseEvent> actionCarteMain = (mouseEvent -> GestionJeu.getJeu().joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
             vc.setCarteChoisieListener(actionCarteMain);
+
         }
     }
 }

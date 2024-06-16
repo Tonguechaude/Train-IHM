@@ -79,6 +79,30 @@ public class VueAutresJoueurs extends FlowPane {
         };
     }
 
+    public String nomIconeBackground(String couleur)
+    {
+        return switch (couleur)
+        {
+            case "ROUGE" ->  "#d98e7e";
+            case "VERT" ->  "#c0d97e";
+            case "JAUNE" ->  "#d9d67e";
+            case "BLEU" ->  "#7eacd9";
+            default -> "pas de couleur";
+        };
+    }
+
+    public String nomIconeBorder(String couleur)
+    {
+        return switch (couleur)
+        {
+            case "ROUGE" -> "red";
+            case "VERT" ->  "green";
+            case "JAUNE" ->  "yellow";
+            case "BLEU" ->  "blue";
+            default -> "pas de couleur";
+        };
+    }
+
 
 
     private void mettreAJourAutresJoueurs(IJoueur joueurCourant) {
@@ -137,7 +161,14 @@ public class VueAutresJoueurs extends FlowPane {
 
 
         hBox.getChildren().addAll(nomJoueurBox, argentBox, victoireBox, railsBox, piocheBox);
-        hBox.setStyle("-fx-background-color:" + nomIcone(joueur.getCouleur().name()) + ";");
+        hBox.setStyle(
+                "-fx-background-color:" + nomIcone(joueur.getCouleur().name()) + ";" +
+                "-fx-background-color:" + nomIconeBackground(joueur.getCouleur().name()) + ";" +
+                "-fx-border-width: 2px; " +
+                "-fx-border-radius: 50px; " +
+                "-fx-border-color:" + nomIconeBorder(joueur.getCouleur().name()) +";" +
+                "-fx-background-radius: 50px;"
+        );
         hBox.setSpacing(20);
 
         return hBox;

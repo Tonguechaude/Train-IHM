@@ -2,7 +2,9 @@ package fr.umontpellier.iut.trainsJavaFX.vues;
 
 import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
+import javafx.beans.binding.Bindings;
 import javafx.event.EventHandler;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -10,6 +12,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.Priority;
 
 /**
  * Cette classe correspond à la fenêtre principale de l'application.
@@ -74,6 +77,7 @@ public class VueDuJeu extends Pane {
         joueurCourantIHM = new HBox();
         joueurCourant = new VueJoueurCourant();
         joueurCourantIHM.getChildren().add(joueurCourant);
+        HBox.setHgrow(joueurCourantIHM, Priority.ALWAYS);
     }
 
     private void initialiseAutresJoueurs()
@@ -81,23 +85,41 @@ public class VueDuJeu extends Pane {
         autresJoueursIHM = new HBox();
         autresJoueurs = new VueAutresJoueurs();
         autresJoueursIHM.getChildren().add(autresJoueurs);
+        HBox.setHgrow(autresJoueursIHM, Priority.ALWAYS);
     }
 
 
     public void creerBindings()
     {
 
+        /*vueDuJeu.prefHeightProperty().bind(getScene().heightProperty());
+        vueDuJeu.prefWidthProperty().bind(getScene().widthProperty());
+
+        //bottom.spacingProperty().bind(getScene);
+
+        plateauIHM.prefWidthProperty().bind(getScene().heightProperty());
+        plateauIHM.prefHeightProperty().bind(getScene().widthProperty());
+*/
+        // Binding pour plateauIHM
         plateauIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
         plateauIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.6));
 
+        // Binding pour joueurCourantIHM et autresJoueursIHM
+        joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.4));
+        autresJoueursIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.4));
+
+        // Binding pour la hauteur de bottom
         bottom.prefHeightProperty().bind(getScene().heightProperty().multiply(0.4));
 
-        ((HBox) bottom.getChildren().get(0)).prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
-        ((HBox) bottom.getChildren().get(1)).prefWidthProperty().bind(((HBox) bottom.getChildren().get(0)).prefWidthProperty().multiply(0.4));
+        // Ajout de marges pour éviter que les vues se collent entre elles
+        joueurCourantIHM.setPadding(new Insets(10));
+        autresJoueursIHM.setPadding(new Insets(10));
+        bottom.setPadding(new Insets(10));
+
+        // Utilisation de la propriété spacing pour gérer l'espace entre les éléments dans bottom
+        bottom.setSpacing(10);
 
 
-        vueDuJeu.minHeightProperty().bind(getScene().heightProperty());
-        vueDuJeu.minWidthProperty().bind(getScene().widthProperty());
 
 
 
@@ -109,6 +131,13 @@ public class VueDuJeu extends Pane {
 
     public IJeu getJeu() {
         return jeu;
+    }
+
+    public void initialize ()
+    {
+        setStyle(
+                "-fx-background-color:#EEEBE4"
+        );
     }
 
 }

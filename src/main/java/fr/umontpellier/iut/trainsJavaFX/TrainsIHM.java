@@ -49,7 +49,9 @@ public class TrainsIHM extends Application {
        if (avecVueChoixJoueurs) {
             nomsJoueurs = vueChoixJoueurs.getNomsJoueurs().toArray(new String[0]);
             plateau = vueChoixJoueurs.getPlateau();
-       } else {
+       }
+       else
+       {
             nomsJoueurs = new String[]{"John", "Paul", "George",  "Ringo"};
        }
         // Tirer aléatoirement 8 cartes préparation
