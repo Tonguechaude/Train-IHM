@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 
 <?import javafx.scene.layout.VBox?>
-<Pane fx:id="autresJoueursBox" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="autresJoueursBox"  xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox fx:id="autresJoueursList" layoutX="10.0" layoutY="10.0" prefHeight="60.0" prefWidth="412.0" spacing="10.0">
          <children>

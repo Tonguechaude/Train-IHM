@@ -4,6 +4,7 @@ import fr.umontpellier.iut.trainsJavaFX.IJeu;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +29,8 @@ public class VueDuJeu extends Pane {
     private HBox plateauIHM;
     private VuePlateau plateau;
 
+
+    private HBox bottom;
     private HBox joueurCourantIHM;
     private VueJoueurCourant joueurCourant;
 
@@ -40,17 +43,12 @@ public class VueDuJeu extends Pane {
 
         vueDuJeu = new BorderPane();
 
-        //TOP PLATEAU
+        //LEFT PLATEAU
         initialisePlateau();
 
 
-        // BOTTOM joueurCourant
-        initialiseJoueurCourant();
-
-        //LEFT
-        initialiseAutresJoueurs();
-
-
+        // BOTTOM joueurCouran
+        initialiseBottom();
 
         getChildren().add(vueDuJeu);
     }
@@ -63,12 +61,19 @@ public class VueDuJeu extends Pane {
         vueDuJeu.setLeft(plateauIHM);
     }
 
+    public void initialiseBottom()
+    {
+        initialiseJoueurCourant();
+        initialiseAutresJoueurs();
+        bottom = new HBox(joueurCourantIHM, autresJoueursIHM);
+        vueDuJeu.setBottom(bottom);
+    }
+
     private void initialiseJoueurCourant()
     {
         joueurCourantIHM = new HBox();
         joueurCourant = new VueJoueurCourant();
         joueurCourantIHM.getChildren().add(joueurCourant);
-        vueDuJeu.setBottom(joueurCourantIHM);
     }
 
     private void initialiseAutresJoueurs()
@@ -76,7 +81,6 @@ public class VueDuJeu extends Pane {
         autresJoueursIHM = new HBox();
         autresJoueurs = new VueAutresJoueurs();
         autresJoueursIHM.getChildren().add(autresJoueurs);
-        vueDuJeu.setRight(autresJoueurs);
     }
 
 
@@ -86,14 +90,16 @@ public class VueDuJeu extends Pane {
         plateauIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
         plateauIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.6));
 
-        joueurCourantIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.5));
-        joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.5));
+        bottom.prefHeightProperty().bind(getScene().heightProperty().multiply(0.4));
 
-        autresJoueursIHM.prefWidthProperty().bind(getScene().widthProperty());
-        autresJoueursIHM.prefHeightProperty().bind(getScene().heightProperty());
+        ((HBox) bottom.getChildren().get(0)).prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
+        ((HBox) bottom.getChildren().get(1)).prefWidthProperty().bind(((HBox) bottom.getChildren().get(0)).prefWidthProperty().multiply(0.4));
 
-        vueDuJeu.prefHeightProperty().bind(getScene().heightProperty());
-        vueDuJeu.prefWidthProperty().bind(getScene().widthProperty());
+
+        vueDuJeu.minHeightProperty().bind(getScene().heightProperty());
+        vueDuJeu.minWidthProperty().bind(getScene().widthProperty());
+
+
 
         plateau.creerBindings();
         joueurCourant.creerBindings();
