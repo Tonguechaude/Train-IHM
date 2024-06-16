@@ -2,6 +2,8 @@ package fr.umontpellier.iut.trainsJavaFX.vues;
 
 import fr.umontpellier.iut.trainsJavaFX.ICarte;
 import fr.umontpellier.iut.trainsJavaFX.mecanique.cartes.Carte;
+import javafx.animation.FadeTransition;
+import javafx.animation.ScaleTransition;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.StringProperty;
@@ -16,6 +18,8 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
 import javafx.geometry.Insets;
+import javafx.stage.Popup;
+import javafx.util.Duration;
 
 import java.awt.*;
 
@@ -36,12 +40,55 @@ public class VueCarte extends StackPane {
 
         imageView = new ImageView(getImage());
         imageView.setPreserveRatio(true);
-        imageView.setFitHeight(105);
+        imageView.setFitHeight(125);
+
+        //EFFETS AFFICHAGE
+
+        ImageView largeImageView = new ImageView(getImage());
+        largeImageView.setPreserveRatio(true);
+        largeImageView.setFitHeight(350);
+
+        Popup popup = new Popup();
+        popup.setAutoHide(true);
+        popup.getContent().add(largeImageView);
+
+        /*//{ POPUP
+        imageView.setOnMouseEntered(event -> {
+            popup.show(imageView, event.getScreenX(), event.getScreenY());
+        });
+
+        imageView.setOnMouseExited(event -> {
+            popup.hide();
+        });
+        //FIN POPUP}*/
+
+        //{Transition
+        FadeTransition fadeIn = new FadeTransition(Duration.millis(200), largeImageView);
+        fadeIn.setFromValue(0.0);
+        fadeIn.setToValue(1.0);
+
+        FadeTransition fadeOut = new FadeTransition(Duration.millis(200), largeImageView);
+        fadeOut.setFromValue(1.0);
+        fadeOut.setToValue(0.0);
+
+        imageView.setOnMouseEntered(event -> {
+            largeImageView.setOpacity(0);
+            popup.show(imageView, event.getScreenX(), event.getScreenY());
+            fadeIn.playFromStart();
+        });
+
+        imageView.setOnMouseExited(event -> {
+            fadeOut.playFromStart();
+            fadeOut.setOnFinished(e -> popup.hide());
+        });
+        //FIN Transition}
+
+        getChildren().addAll(imageView);
 
         cercle = new Circle(10);
         basDroite = new Label();
 
-        getChildren().addAll(imageView);
+
     }
 
     public VueCarte(Carte carte, IntegerProperty nbRestants) {
