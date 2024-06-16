@@ -10,6 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
@@ -32,6 +33,7 @@ public class VueDuJeu extends Pane {
     private HBox plateauIHM;
     private VuePlateau plateau;
 
+    private FlowPane reserve;
 
     private HBox bottom;
     private HBox joueurCourantIHM;
@@ -50,8 +52,11 @@ public class VueDuJeu extends Pane {
         initialisePlateau();
 
 
-        // BOTTOM joueurCouran
+        // BOTTOM joueurCourant
         initialiseBottom();
+
+        //RIGHT reserve
+        initialiseReserve();
 
         getChildren().add(vueDuJeu);
     }
@@ -88,6 +93,20 @@ public class VueDuJeu extends Pane {
         HBox.setHgrow(autresJoueursIHM, Priority.ALWAYS);
     }
 
+    private void initialiseReserve()
+    {
+        reserve = new FlowPane();
+        for(String nomCarte : jeu.getTaillesPilesReserveProperties().keySet()) {
+            VueCarte vc = new VueCarte(jeu.getReserve().getCarte(nomCarte), jeu.getTaillesPilesReserveProperties().get(nomCarte));
+            reserve.getChildren().add(vc);
+            jeu.getTaillesPilesReserveProperties().get(nomCarte).addListener(
+                    (observable, oldValue, newValue) -> {
+                        vc.getLabel().setValue(String.valueOf(newValue));
+                    }
+            );
+        }
+        vueDuJeu.setRight(reserve);
+    }
 
     public void creerBindings()
     {
