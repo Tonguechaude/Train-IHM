@@ -97,8 +97,15 @@ public class VueJoueurCourant extends Pane {
                                 "-fx-background-radius: 50px;"
                         );
 
+                        cartesMain.getChildren().clear();
 
-
+                        for(Carte c : newJoueur.mainProperty())
+                        {
+                                VueCarte vc = new VueCarte(c);
+                                cartesMain.getChildren().add(vc);
+                                EventHandler<MouseEvent> actionCarteMain = (mouseEvent -> newJoueur.uneCarteDeLaMainAEteChoisie(c.getNom()));
+                                vc.setCarteChoisieListener(actionCarteMain);
+                        }
                     }
                 }
         );
@@ -159,13 +166,14 @@ public class VueJoueurCourant extends Pane {
                     (src, oldCarteRecu, newCarteRecu) -> {
                         cartesRecu.getChildren().clear();
 
-                        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().cartesRecuesProperty()) {
+                        for (Carte c : newCarteRecu) {
                             VueCarte vc = new VueCarte(c);
                             cartesRecu.getChildren().add(vc);
                         }
                     }
             );
         }
+
     }
 
     EventHandler<MouseEvent> actionPasserParDefaut = (mouseEvent -> GestionJeu.getJeu().passerAEteChoisi());
@@ -206,16 +214,4 @@ public class VueJoueurCourant extends Pane {
         };
     }
 
-
-    public void initialize() {
-        cartesMain.getChildren().clear();
-
-        for (Carte c : GestionJeu.getJeu().joueurCourantProperty().get().mainProperty()) {
-            VueCarte vc = new VueCarte(c);
-            cartesMain.getChildren().add(vc);
-            EventHandler<MouseEvent> actionCarteMain = (mouseEvent -> GestionJeu.getJeu().joueurCourantProperty().get().uneCarteDeLaMainAEteChoisie(c.getNom()));
-            vc.setCarteChoisieListener(actionCarteMain);
-
-        }
-    }
 }
