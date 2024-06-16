@@ -24,14 +24,18 @@ public class VueDuJeu extends Pane {
     private final IJeu jeu;
 
     private final BorderPane vueDuJeu;
+
     private HBox plateauIHM;
     private VuePlateau plateau;
 
     private HBox joueurCourantIHM;
     private VueJoueurCourant joueurCourant;
 
+    private HBox autresJoueursIHM;
+    private VueAutresJoueurs autresJoueurs;
 
-    public VueDuJeu(IJeu jeu) {
+    public VueDuJeu(IJeu jeu)
+    {
         this.jeu = jeu;
 
         vueDuJeu = new BorderPane();
@@ -42,25 +46,42 @@ public class VueDuJeu extends Pane {
 
         // BOTTOM joueurCourant
         initialiseJoueurCourant();
+
+        //LEFT
+        initialiseAutresJoueurs();
+
+
+
         getChildren().add(vueDuJeu);
     }
 
-    private void initialisePlateau() {
+    private void initialisePlateau()
+    {
         plateauIHM = new HBox();
         plateau = new VuePlateau();
         plateauIHM.getChildren().add(plateau);
         vueDuJeu.setLeft(plateauIHM);
     }
 
-    private void initialiseJoueurCourant() {
+    private void initialiseJoueurCourant()
+    {
         joueurCourantIHM = new HBox();
         joueurCourant = new VueJoueurCourant();
         joueurCourantIHM.getChildren().add(joueurCourant);
         vueDuJeu.setBottom(joueurCourantIHM);
     }
 
+    private void initialiseAutresJoueurs()
+    {
+        autresJoueursIHM = new HBox();
+        autresJoueurs = new VueAutresJoueurs();
+        autresJoueursIHM.getChildren().add(autresJoueurs);
+        vueDuJeu.setRight(autresJoueurs);
+    }
 
-    public void creerBindings() {
+
+    public void creerBindings()
+    {
 
         plateauIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.6));
         plateauIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.6));
@@ -68,18 +89,20 @@ public class VueDuJeu extends Pane {
         joueurCourantIHM.prefHeightProperty().bind(getScene().heightProperty().multiply(0.5));
         joueurCourantIHM.prefWidthProperty().bind(getScene().widthProperty().multiply(0.5));
 
+        autresJoueursIHM.prefWidthProperty().bind(getScene().widthProperty());
+        autresJoueursIHM.prefHeightProperty().bind(getScene().heightProperty());
+
         vueDuJeu.prefHeightProperty().bind(getScene().heightProperty());
         vueDuJeu.prefWidthProperty().bind(getScene().widthProperty());
 
         plateau.creerBindings();
         joueurCourant.creerBindings();
+        autresJoueurs.creerBindings();
 
     }
 
     public IJeu getJeu() {
         return jeu;
     }
-
-    EventHandler<? super MouseEvent> actionPasserParDefaut = (mouseEvent -> System.out.println("Passer a été demandé"));
 
 }

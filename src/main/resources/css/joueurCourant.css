@@ -1,0 +1,47 @@
+/* joueurCourant.css */
+
+/* Styling the root pane */
+.Pane {
+    -fx-background-color: pink;
+}
+
+/* Styling HBoxes */
+.hbox {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Styling VBoxes */
+.vbox {
+    -fx-padding: 10;
+    -fx-spacing: 10;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #cccccc;
+    -fx-border-width: 1;
+    -fx-border-radius: 5;
+    -fx-background-radius: 5;
+}
+
+/* Styling Labels */
+.label {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333;
+}
+
+/* Styling Buttons */
+.button {
+    -fx-background-color: #008cba;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-padding: 5 10 5 10;
+    -fx-background-radius: 5;
+}
+
+.button:hover {
+    -fx-background-color: #005f5f;
+}

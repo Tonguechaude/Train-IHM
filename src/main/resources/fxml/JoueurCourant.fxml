@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<Pane fx:id="joueurCourantBox" prefHeight="194.0" prefWidth="428.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="joueurCourantBox" prefHeight="194.0" prefWidth="722.0" stylesheets="@/css/joueurCourant.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <HBox prefHeight="60.0" prefWidth="412.0" spacing="10.0">
          <children>

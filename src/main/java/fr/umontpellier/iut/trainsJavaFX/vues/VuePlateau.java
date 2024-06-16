@@ -57,7 +57,8 @@ public class VuePlateau extends Pane {
             loader.load();
         } catch (IOException e) {
             e.printStackTrace();
-        }        scaleTuile = new Scale();
+        }
+        scaleTuile = new Scale();
         tuiles.getTransforms().add(scaleTuile);
     }
 
